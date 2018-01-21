@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BMI Calculator</title>
+  <meta charset="utf-8">
+  <meta name="description" content="BMI Calculator">
+  <meta name="author" content="P. Oberholzer">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>BMI Calculator</h1>
+    <h2>A brief introduction</h2>
+    <p>P. Oberholzer<br/>Data Scientist</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Index</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This brief presentation aims at introducing the shiny application &quot;BMI Calculator&quot; developped for the purpose of the project in class &quot;Data Products&quot; from the Coursera hosted lecture &quot;Specialization in Data Science&quot; from the John Hopkins University.  </p>
+
+<p>The following points are discussed in the next slides:</p>
+
+<ul>
+<li>Motivation</li>
+<li>Description</li>
+<li>Code</li>
+</ul>
+
+<p>N.B. This work represents a proof-of-concept project realized in a short time frame and does not intend to deliver a perfect stable and robust application. Further quality checks and improvements would be needed to obtain a final product. </p>
+
+<p>Link to the application &quot;BMI Calculator&quot;: <a href="http://obepi.shinyapps.io/BMI_Calculator/">BMI Calculator</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Motivation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The Body Mass Index (BMI) is a index of the relative weight based on an individual&#39;s mass and height. It is often used to quantify overweight and obesity tendancies, which is nowadays a crucial issue in most industrial countries of the world. It is calculated as follows:</p>
+
+<p>\[BMI = \frac {mass} {height}^2 \:\:\:  \big[  \frac{\textrm{kg}} {\textrm{m}^2}  \big]\]</p>
+
+<p>It can therefore be interesting to compute our own value and to compare it to the mean value of other countries for instance. A data set is made available from the World Health Organisation (WHO) that contains mean values and deviations for 20+ adults, male and female, for 189 countries.</p>
+
+<h3>Source</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Body_mass_index">Wikipedia</a><br>
+<a href="%22http://apps.who.int/gho/data/view.main.2461?lang=fr%22">WHO</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Description</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The functionality of the application is simple. The main effort deployed in that work was in the data processing and the rendering.</p>
+
+<p>Based on the weight and height, the BMI index is computed. Also, a graph reports the mean values obtained from the WHO data set. On the same graph, the BMI value of the user as well as its country are reported as benchmark. On the side panel, the user also has the option of zooming on the country considered. For that, the option &quot;Zoom on my country&quot; must be activated and the precision is fixed with the slidebar.</p>
+
+<table><thead>
+<tr>
+<th>Input</th>
+<th>Output</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Weight [kg]</td>
+<td>Calculated BMI</td>
+</tr>
+<tr>
+<td>Height [cm]</td>
+<td>Plot of BMI per country and sex</td>
+</tr>
+<tr>
+<td>Country</td>
+<td></td>
+</tr>
+<tr>
+<td>Zoom options</td>
+<td></td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Code</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The full code of the application can be found on the Github repository. Herebelow, we just report the calculation of the BMI as code chunk. The example corresponds to the default value.</p>
+
+<pre><code class="r">BMI_calc &lt;- function(wt,ht) {
+  ht &lt;- ht/100 # Conversion from [cm] to [m]
+  wt/(ht^2)}
+
+wt &lt;- 70    # Is taken from input$Weight in shiny
+ht &lt;- 185   # Is taken from input$Height in shiny
+
+BMI_calc(wt,ht)
+</code></pre>
+
+<pre><code>## [1] 20.45
+</code></pre>
+
+<h3>Source</h3>
+
+<p><a href="https://github.com/Obepi/Data_Products.git">Code on Github</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Index'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Motivation'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Description'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Code'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

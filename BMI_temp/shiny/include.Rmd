@@ -1,0 +1,4 @@
+
+$BMI = \frac{mass}{height^2}$  $[\frac{\textrm{kg}} {\textrm{m}^2}]$
+
+
